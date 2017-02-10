@@ -1,0 +1,11 @@
+{
+  "name": "react-device",
+  "version": "0.0.1",
+  "description": "React aware device information",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tom Jenkins",
+  "license": "ISC"
+}
