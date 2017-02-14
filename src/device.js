@@ -2,25 +2,31 @@ import { Component, PropTypes } from 'react'
 import debounce from 'lodash/debounce'
 import parser from 'ua-parser-js'
 
-const details = parser()
-
+export const SIZE_UNKNOWN = -1
 export const LANDSCAPE = 'landscape'
 export const PORTRAIT = 'portrait'
 
 class Device extends Component {
   static _onChange () {
-    const windowDetails = {}
-    windowDetails.width = window.innerWidth ||
-      document.documentElement.clientWidth ||
-      document.body.clientWidth
-    windowDetails.height = window.innerHeight ||
-      document.documentElement.clientHeight ||
-      document.body.clientHeight
-    windowDetails.orientation = (windowDetails.width > windowDetails.height) ? LANDSCAPE : PORTRAIT
+    const windowDetails = {
+      width: SIZE_UNKNOWN,
+      height: SIZE_UNKNOWN,
+      orientation: LANDSCAPE
+    }
+
+    if (global.window) {
+      windowDetails.width = window.innerWidth ||
+        document.documentElement.clientWidth ||
+        document.body.clientWidth
+      windowDetails.height = window.innerHeight ||
+        document.documentElement.clientHeight ||
+        document.body.clientHeight
+        windowDetails.orientation = (windowDetails.width > windowDetails.height) ? LANDSCAPE : PORTRAIT
+    }
 
     const deviceInfo = {
       screen: windowDetails,
-      ...details
+      ...Device.details
     }
     Device._listeners.forEach(listener => {
       listener(deviceInfo)
@@ -29,6 +35,12 @@ class Device extends Component {
 
   static _listeners = []
   static DEBOUNCE_TIME = 100
+  static details = {}
+
+  constructor (props) {
+    super(props)
+    Device.details = parser(global.navigator)
+  }
 
   componentDidMount () {
     const idx = Device._listeners.indexOf(this.props.onChange)

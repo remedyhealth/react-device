@@ -2,10 +2,34 @@
   "name": "react-device",
   "version": "0.0.1",
   "description": "React aware device information",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "npm run compile:commonjs && npm run compile:es",
+    "compile:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "compile:es": "cross-env BABEL_ENV=es babel src --out-dir es --ignore test.js",
+    "prepublish": "npm run compile"
   },
   "author": "Tom Jenkins",
-  "license": "ISC"
+  "license": "ISC",
+  "peerDependencies": {
+    "react": ">=15.0.0"
+  },
+  "dependencies": {
+    "cross-env": "^3.1.4",
+    "lodash": "^4.17.4",
+    "ua-parser-js": "^0.7.12"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.22.1",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.22.0",
+    "babel-preset-latest": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "react": "^15.4.2"
+  }
 }

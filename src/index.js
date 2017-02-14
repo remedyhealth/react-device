@@ -1,4 +1,5 @@
-import Device, { LANDSCAPE, PORTRAIT } from './device'
+import Device, { LANDSCAPE, PORTRAIT, SIZE_UNKNOWN } from './Device'
+import UserAgentProvider from './UserAgentProvider'
 
 export default Device
-export { LANDSCAPE, PORTRAIT }
+export { LANDSCAPE, PORTRAIT, SIZE_UNKNOWN, UserAgentProvider }
