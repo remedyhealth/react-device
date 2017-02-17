@@ -12,15 +12,10 @@
   },
   "author": "Tom Jenkins",
   "license": "ISC",
-  "peerDependencies": {
-    "react": ">=15.0.0"
-  },
+  "peerDependencies": {},
   "dependencies": {
-    "cross-env": "^3.1.4",
-    "enzyme": "^2.7.1",
-    "jest-cli": "^18.1.0",
     "lodash": "^4.17.4",
-    "react-addons-test-utils": "^15.4.2",
+    "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "ua-parser-js": "^0.7.12"
   },
@@ -34,6 +29,9 @@
     "babel-preset-latest": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
-    "react": "^15.4.2"
+    "cross-env": "^3.1.4",
+    "enzyme": "^2.7.1",
+    "jest-cli": "^18.1.0",
+    "react-addons-test-utils": "^15.4.2"
   }
 }
