@@ -55,7 +55,7 @@ React component that takes
 
 ```jsx
 import React from 'react'
-import { Device } from 'react-device'
+import Device from 'react-device'
 
 const MyComponent = (props) => {
   const onChange = (deviceInfo) => {
@@ -67,6 +67,8 @@ const MyComponent = (props) => {
 
   return <Device onChange={onChange} />
 }
+
+export default MyComponent
 ```
 
 ### `Device.DEBOUNCE_TIME`
