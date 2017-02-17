@@ -2,6 +2,14 @@
   "name": "react-device",
   "version": "0.0.1",
   "description": "React aware device information",
+  "keywords": [
+    "react",
+    "screen",
+    "width",
+    "height",
+    "browser",
+    "device"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
@@ -10,8 +18,16 @@
     "compile:es": "cross-env BABEL_ENV=es babel src --out-dir es --ignore test.js",
     "prepublish": "npm run compile"
   },
-  "author": "Tom Jenkins",
-  "license": "ISC",
+  "author": "Tom Jenkins <tjenkins@remedyhealthmedia.com>",
+  "contributors": [],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url" : "https://github.com/remedyhealth/react-device/"
+  },
+  "bugs": {
+    "url" : "https://github.com/remedyhealth/react-device/issues"
+  },
   "peerDependencies": {},
   "dependencies": {
     "lodash": "^4.17.4",
