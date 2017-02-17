@@ -1,4 +1,4 @@
-import { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import debounce from 'lodash/debounce'
 import parser from 'ua-parser-js'
 
@@ -6,8 +6,11 @@ export const SIZE_UNKNOWN = -1
 export const LANDSCAPE = 'landscape'
 export const PORTRAIT = 'portrait'
 
+/**
+ *
+ */
 class Device extends Component {
-  static _onChange () {
+  static _buildDeviceInfo() {
     const windowDetails = {
       width: SIZE_UNKNOWN,
       height: SIZE_UNKNOWN,
@@ -24,10 +27,14 @@ class Device extends Component {
         windowDetails.orientation = (windowDetails.width > windowDetails.height) ? LANDSCAPE : PORTRAIT
     }
 
-    const deviceInfo = {
+    return {
       screen: windowDetails,
       ...Device.details
     }
+  }
+
+  static _onChange() {
+    const deviceInfo = Device._buildDeviceInfo()
     Device._listeners.forEach(listener => {
       listener(deviceInfo)
     })
@@ -39,12 +46,10 @@ class Device extends Component {
 
   constructor (props) {
     super(props)
-    Device.details = parser(global.navigator)
+    Device.details = parser(props.userAgent)
   }
 
   componentDidMount () {
-    const idx = Device._listeners.indexOf(this.props.onChange)
-    Device._listeners.splice(idx, 1)
     if (!Device._listeners.length) {
       Device._debouncedChange = debounce(Device._onChange, Device.DEBOUNCE_TIME)
       window.addEventListener('resize', Device._debouncedChange, true)
@@ -76,7 +81,8 @@ class Device extends Component {
 }
 
 Device.propTypes = {
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  userAgent: PropTypes.string
 }
 
 export default Device

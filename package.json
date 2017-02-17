@@ -4,7 +4,7 @@
   "description": "React aware device information",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "compile": "npm run compile:commonjs && npm run compile:es",
     "compile:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
     "compile:es": "cross-env BABEL_ENV=es babel src --out-dir es --ignore test.js",
@@ -17,7 +17,11 @@
   },
   "dependencies": {
     "cross-env": "^3.1.4",
+    "enzyme": "^2.7.1",
+    "jest-cli": "^18.1.0",
     "lodash": "^4.17.4",
+    "react-addons-test-utils": "^15.4.2",
+    "react-dom": "^15.4.2",
     "ua-parser-js": "^0.7.12"
   },
   "devDependencies": {
