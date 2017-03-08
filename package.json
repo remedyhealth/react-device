@@ -1,6 +1,6 @@
 {
   "name": "react-device",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "React aware device information",
   "keywords": [
     "react",
@@ -16,17 +16,18 @@
     "compile": "npm run compile:commonjs && npm run compile:es",
     "compile:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
     "compile:es": "cross-env BABEL_ENV=es babel src --out-dir es --ignore test.js",
-    "prepublish": "npm run compile"
+    "prepublish": "npm run compile",
+    "release": "standard-version"
   },
   "author": "Tom Jenkins <tjenkins@remedyhealthmedia.com>",
   "contributors": [],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url" : "https://github.com/remedyhealth/react-device/"
+    "url": "https://github.com/remedyhealth/react-device/"
   },
   "bugs": {
-    "url" : "https://github.com/remedyhealth/react-device/issues"
+    "url": "https://github.com/remedyhealth/react-device/issues"
   },
   "peerDependencies": {},
   "dependencies": {
@@ -48,6 +49,7 @@
     "cross-env": "^3.1.4",
     "enzyme": "^2.7.1",
     "jest-cli": "^18.1.0",
-    "react-addons-test-utils": "^15.4.2"
+    "react-addons-test-utils": "^15.4.2",
+    "standard-version": "^4.0.0"
   }
 }
