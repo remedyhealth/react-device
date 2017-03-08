@@ -4,8 +4,14 @@ React component that provides device information (browser, cpu, device, engine, 
 
 ## Installation
 
+#### npm
 ```sh
-$ npm install react-device
+$ npm install react-device --save
+```
+
+#### yarn
+```sh
+$ yarn add react-device
 ```
 
 ## API
