@@ -79,7 +79,7 @@ export default MyComponent
 
 ### `Device.DEBOUNCE_TIME`
 
-Numeric value of how much time should be waited before calling each listener function. Default value is `100`.
+Numeric value of how much time should be waited before calling each listener function. Default value is `250`.
 
 The debounce function is created lazily when the component instance is mounted, so you can change the value before mounting.
 
