@@ -33,6 +33,10 @@ var SIZE_UNKNOWN = exports.SIZE_UNKNOWN = null;
 var LANDSCAPE = exports.LANDSCAPE = 'landscape';
 var PORTRAIT = exports.PORTRAIT = 'portrait';
 
+var isClientSide = function isClientSide() {
+  return typeof window != 'undefined' && window.document;
+};
+
 /**
  *
  */
@@ -49,7 +53,7 @@ var Device = function (_Component) {
         orientation: LANDSCAPE
       };
 
-      if (global.window) {
+      if (isClientSide()) {
         windowDetails.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
         windowDetails.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
         windowDetails.orientation = windowDetails.width > windowDetails.height ? LANDSCAPE : PORTRAIT;
@@ -83,17 +87,31 @@ var Device = function (_Component) {
     if (!Device._debouncedChange) {
       Device._debouncedChange = (0, _debounce2.default)(Device._onChange, Device.DEBOUNCE_TIME);
     }
-    Device._publish([props.onChange]);
+    // componentDidMount is not called on server so we load device information
+    // here if on the server; client side loading will happen in componentDidMount
+    // after rendering so we know the document is loaded
+    if (!isClientSide()) {
+      Device._publish([props.onChange]);
+    }
     return _this;
   }
 
   _createClass(Device, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this2 = this;
+
       if (!Device._listeners.length) {
         window.addEventListener('resize', Device._debouncedChange, true);
       }
       Device._listeners.push(this.props.onChange);
+      if (isClientSide()) {
+        // at his point, its possible that the viewport meta tag (if one on page)
+        // has not adjusted the innerWidth/innerHeight values, so delay briefly
+        setTimeout(function () {
+          Device._publish([_this2.props.onChange]);
+        }, 1);
+      }
     }
   }, {
     key: 'componentWillUnmount',

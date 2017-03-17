@@ -6,6 +6,8 @@ export const SIZE_UNKNOWN = null
 export const LANDSCAPE = 'landscape'
 export const PORTRAIT = 'portrait'
 
+const isClientSide = () => (typeof window != 'undefined' && window.document)
+
 /**
  *
  */
@@ -17,14 +19,14 @@ class Device extends Component {
       orientation: LANDSCAPE
     }
 
-    if (global.window) {
+    if (isClientSide()) {
       windowDetails.width = window.innerWidth ||
         document.documentElement.clientWidth ||
         document.body.clientWidth
       windowDetails.height = window.innerHeight ||
         document.documentElement.clientHeight ||
         document.body.clientHeight
-        windowDetails.orientation = (windowDetails.width > windowDetails.height) ? LANDSCAPE : PORTRAIT
+      windowDetails.orientation = (windowDetails.width > windowDetails.height) ? LANDSCAPE : PORTRAIT
     }
 
     return {
@@ -54,7 +56,12 @@ class Device extends Component {
     if (!Device._debouncedChange) {
       Device._debouncedChange = debounce(Device._onChange, Device.DEBOUNCE_TIME)
     }
-    Device._publish([props.onChange])
+    // componentDidMount is not called on server so we load device information
+    // here if on the server; client side loading will happen in componentDidMount
+    // after rendering so we know the document is loaded
+    if (!isClientSide()) {
+      Device._publish([props.onChange])
+    }
   }
 
   componentDidMount () {
@@ -62,6 +69,11 @@ class Device extends Component {
       window.addEventListener('resize', Device._debouncedChange, true)
     }
     Device._listeners.push(this.props.onChange)
+    if (isClientSide()) {
+      // at his point, its possible that the viewport meta tag (if one on page)
+      // has not adjusted the innerWidth/innerHeight values, so delay briefly
+      setTimeout(() => { Device._publish([this.props.onChange]) }, 1)
+    }
   }
 
   componentWillUnmount () {
