@@ -10,6 +10,7 @@ window.addEventListener = jest.fn((event, cb) => {
 window.removeEventListener = jest.fn((event, cb) => {
   delete map[event]
 })
+window.getComputedStyle = jest.fn(() => ({ getPropertyValue: () => '16px' }))
 
 jest.useFakeTimers()
 
@@ -110,5 +111,19 @@ test('should accept user agent via props', () => {
     major: '56',
     name: 'Chrome',
     version: '56.0.2924.87'
+  })
+})
+
+test('should determine defaultFontSize && widthEm', () => {
+  const wrapper = wrap()
+
+  const deviceInfo = Device._buildDeviceInfo()
+  expect(Object.keys(deviceInfo)).toEqual(['screen', 'ua', 'browser', 'engine', 'os', 'device', 'cpu'])
+  expect(deviceInfo.screen).toEqual({
+    width: 1024,
+    height: 768,
+    orientation: 'landscape',
+    defaultFontSize: 16,
+    widthEm: 64
   })
 })

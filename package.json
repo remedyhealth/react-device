@@ -10,14 +10,16 @@
     "browser",
     "device"
   ],
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "clean": "rimraf dist",
+    "build": "babel src --out-dir dist --copy-files  --ignore test.js,stories.js",
     "test": "jest",
-    "compile": "npm run compile:commonjs && npm run compile:es",
-    "compile:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
-    "compile:es": "cross-env BABEL_ENV=es babel src --out-dir es --ignore test.js",
-    "prepublish": "npm run compile",
-    "release": "standard-version"
+    "lint": "eslint src",
+    "lib": "npm run clean && npm run build",
+    "release": "npm run lib && standard-version",
+    "prepare": "npm run test",
+    "pub": "git push --follow-tags origin master; npm publish"
   },
   "author": "Tom Jenkins <tjenkins@remedyhealthmedia.com>",
   "contributors": [],
@@ -31,25 +33,28 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "lodash": "^4.17.4",
+    "lodash.debounce": "^4.0.8",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2",
     "ua-parser-js": "^0.7.12"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
-    "babel-loader": "^6.2.10",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.22.0",
-    "babel-preset-latest": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.22.0",
-    "babel-preset-stage-0": "^6.22.0",
-    "cross-env": "^3.1.4",
+    "babel-preset-stage-1": "^6.24.1",
     "enzyme": "^2.7.1",
     "jest-cli": "^18.1.0",
     "react-addons-test-utils": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-test-renderer": "^15.6.1",
+    "rimraf": "^2.6.1",
     "standard-version": "^4.0.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ]
   }
 }

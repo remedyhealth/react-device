@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import debounce from 'lodash/debounce'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import debounce from 'lodash.debounce'
 import parser from 'ua-parser-js'
 
 export const SIZE_UNKNOWN = null
@@ -7,6 +8,11 @@ export const LANDSCAPE = 'landscape'
 export const PORTRAIT = 'portrait'
 
 const isClientSide = () => (typeof window != 'undefined' && window.document)
+
+const getComputedFontSize = () => {
+  const cs = window.getComputedStyle(document.body, null)
+  return cs.getPropertyValue('font-size')
+}
 
 /**
  *
@@ -27,6 +33,9 @@ class Device extends Component {
         document.documentElement.clientHeight ||
         document.body.clientHeight
       windowDetails.orientation = (windowDetails.width > windowDetails.height) ? LANDSCAPE : PORTRAIT
+      const fontSize = getComputedFontSize()
+      windowDetails.defaultFontSize = Number(fontSize.replace('px', ''))
+      windowDetails.widthEm = windowDetails.width / windowDetails.defaultFontSize
     }
 
     return {
