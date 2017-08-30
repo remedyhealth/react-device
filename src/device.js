@@ -9,6 +9,11 @@ export const PORTRAIT = 'portrait'
 
 const isClientSide = () => (typeof window != 'undefined' && window.document)
 
+const getComputedFontSize = () => {
+  const cs = window.getComputedStyle(document.body, null)
+  return cs.getPropertyValue('font-size')
+}
+
 /**
  *
  */
@@ -28,6 +33,9 @@ class Device extends Component {
         document.documentElement.clientHeight ||
         document.body.clientHeight
       windowDetails.orientation = (windowDetails.width > windowDetails.height) ? LANDSCAPE : PORTRAIT
+      const fontSize = getComputedFontSize()
+      windowDetails.defaultFontSize = Number(fontSize.replace('px', ''))
+      windowDetails.widthEm = windowDetails.width / windowDetails.defaultFontSize
     }
 
     return {
