@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import debounce from 'lodash/debounce'
+import debounce from 'lodash.debounce'
 import parser from 'ua-parser-js'
 
 export const SIZE_UNKNOWN = null
